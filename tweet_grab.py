@@ -66,7 +66,7 @@ if __name__ == '__main__':
                           aws_secret_access_key='VofOgiLAZxVwtdIogblglmG4pywOjjQy6/Hr2fpi' 
                           )
 
-    delivery_stream = 'tesla_sent'
+    delivery_stream = 'ts_proj'
     #
     while True:
         try:
