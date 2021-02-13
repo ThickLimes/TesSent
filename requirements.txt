@@ -4,5 +4,3 @@ black
 flask
 tweepy
 boto3
-time
-json
