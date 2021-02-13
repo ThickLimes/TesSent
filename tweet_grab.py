@@ -62,8 +62,8 @@ if __name__ == '__main__':
     #tweets = Table('tweets_ft',connection=conn)
     client = boto3.client('firehose', 
                           region_name='us-east-1',
-                          aws_access_key_id='',
-                          aws_secret_access_key='' 
+                          aws_access_key_id='AKIAI633IXDMXCKTQPBA',
+                          aws_secret_access_key='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' 
                           )
 
     delivery_stream = 'tesla_sent'
