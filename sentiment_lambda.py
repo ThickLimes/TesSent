@@ -6,7 +6,7 @@ import boto3
 
 print('Loading function')
 
-def lambda_handler(event, context):
+def lambda_sentiment(event, context):
     output = []
 
     for record in event['records']:
