@@ -4,7 +4,7 @@ import base64
 import json
 import boto3
 
-print('Loading function')
+print('Sentinent Analysis')
 
 def lambda_sentiment(event, context):
     output = []
@@ -14,7 +14,7 @@ def lambda_sentiment(event, context):
         dict_data = base64.b64decode(record['data']).decode('utf-8').strip()
         print(dict_data)
         
-        comprehend = boto3.client(service_name='comprehend', region_name='eu-west-1')
+        comprehend = boto3.clinanoent(service_name='comprehend', region_name='eu-west-1')
         sentiment_all = comprehend.detect_sentiment(Text=dict_data, LanguageCode='en')
         sentiment = sentiment_all['Sentiment']
         print(sentiment)
