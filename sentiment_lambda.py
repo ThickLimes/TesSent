@@ -3,10 +3,11 @@ from __future__ import print_function
 import base64
 import json
 import boto3
+from datetime import datetime
 
 print('Sentinent Analysis')
 
-def lambda_sentiment(event, context):
+def lambda_handler(event, context):
     output = []
 
     for record in event['records']:
@@ -20,11 +21,13 @@ def lambda_sentiment(event, context):
         pos = sent['SentimentScore']['Positive']
         neg = sent['SentimentScore']['Negative']
         total = pos - neg
-        
+        now = datetime.now()
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
         data_record = {
             'message': dict_data,
             'sentiment': sentiment,
-            'total': total}
+            'total': total,
+            'timestamp':dt_string}
  
         output_record = {
             'recordId': record['recordId'],
