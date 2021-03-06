@@ -1,9 +1,8 @@
 from __future__ import print_function
-
+from datetime import datetime
 import base64
 import json
 import boto3
-from datetime import datetime
 
 print('Sentinent Analysis')
 
@@ -13,26 +12,38 @@ def lambda_handler(event, context):
     for record in event['records']:
         
         dict_data = base64.b64decode(record['data']).decode('utf-8').strip()
+        #time = base64.b64decode(record['time']).decode('utf-8').strip()
         print(dict_data)
-        
+        dict_data=dict_data 
         comprehend = boto3.client(service_name='comprehend', region_name='eu-west-1')
-        sent = comprehend.detect_sentiment(Text=dict_data, LanguageCode='en')
-        sentiment = sent['Sentiment']
-        pos = sent['SentimentScore']['Positive']
-        neg = sent['SentimentScore']['Negative']
-        total = pos - neg
+        sentiment_all = comprehend.detect_sentiment(Text=dict_data, LanguageCode='en')
+        sentiment = sentiment_all['Sentiment']
+        print(sentiment)
+        positive = sentiment_all['SentimentScore']['Positive']
+        negative = sentiment_all['SentimentScore']['Negative']
+        total = positive - negative
+        print(total)
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
         data_record = {
             'message': dict_data,
             'sentiment': sentiment,
             'total': total,
-            'timestamp':dt_string}
- 
+            'timestamp':dt_string
+            
+        }
+        #data_record=str(data_record)
+        #data_record=data_record.replace('}', r'} \n')
+        print(data_record)
+        data_record=json.dumps(data_record) + '\n'
+        data_record=base64.b64encode(data_record.encode('utf-8')).decode('utf-8')
+        print(data_record)
         output_record = {
             'recordId': record['recordId'],
             'result': 'Ok',
-            'data': base64.b64encode(json.dumps(data_record).encode('utf-8')).decode('utf-8')}
+            'data': data_record
+        }
+        print(output_record)
         
         output.append(output_record)
 
