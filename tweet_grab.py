@@ -7,10 +7,10 @@ import time
 
 
 #Variables that contains the user credentials to access Twitter API
-consumer_key = '74kYHUIi2qeskNxEO0HVsOeuD'
-consumer_secret ='RCtvO2RCwANhQTFYc9HU3t3t92wEeMSx4NNum7mpJfXqcngPqa'
-access_token = '704131740839751681-6pjtaxdgqjDgUN9m0zYX1RFDiIdmQcn'
-access_token_secret = 'EPFjxHxPUyTXJuNHrkUP8DeWgpH6cdr3C2t7jgwZF6Wvm'
+consumer_key = 'key'
+consumer_secret ='secret'
+access_token = 'token'
+access_token_secret = 'secret'
 
 class StdOutListener(StreamListener):
 
@@ -62,8 +62,8 @@ if __name__ == '__main__':
     #tweets = Table('tweets_ft',connection=conn)
     client = boto3.client('firehose', 
                           region_name='us-east-1',
-                          aws_access_key_id='AKIAI633IXDMXCKTQPBA',
-                          aws_secret_access_key='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' 
+                          aws_access_key_id='key',
+                          aws_secret_access_key='key' 
                           )
 
     delivery_stream = 'ts_proj'
