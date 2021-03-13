@@ -8,11 +8,8 @@ print('Sentinent Analysis')
 
 def lambda_handler(event, context):
     output = []
-
     for record in event['records']:
-        
         dict_data = base64.b64decode(record['data']).decode('utf-8').strip()
-        #time = base64.b64decode(record['time']).decode('utf-8').strip()
         print(dict_data)
         dict_data=dict_data 
         comprehend = boto3.client(service_name='comprehend', region_name='eu-west-1')
@@ -22,6 +19,7 @@ def lambda_handler(event, context):
         positive = sentiment_all['SentimentScore']['Positive']
         negative = sentiment_all['SentimentScore']['Negative']
         total = positive - negative
+        # Thought this might be a useful way to get some information from "neutral" tweets but ultimately was not used
         print(total)
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
@@ -29,11 +27,7 @@ def lambda_handler(event, context):
             'message': dict_data,
             'sentiment': sentiment,
             'total': total,
-            'timestamp':dt_string
-            
-        }
-        #data_record=str(data_record)
-        #data_record=data_record.replace('}', r'} \n')
+            'timestamp':dt_string}
         print(data_record)
         data_record=json.dumps(data_record) + '\n'
         data_record=base64.b64encode(data_record.encode('utf-8')).decode('utf-8')
@@ -41,11 +35,8 @@ def lambda_handler(event, context):
         output_record = {
             'recordId': record['recordId'],
             'result': 'Ok',
-            'data': data_record
-        }
+            'data': data_record}
         print(output_record)
-        
         output.append(output_record)
-
     print(output)
     return {'records': output}
