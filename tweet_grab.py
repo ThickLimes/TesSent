@@ -13,23 +13,20 @@ access_token = 'token'
 access_token_secret = 'secret'
 
 class StdOutListener(StreamListener):
-
     def on_data(self, data):
         tweet = json.loads(data)
         try:
             if 'extended_tweet' in tweet.keys():
-                #print (tweet['text'])
+                
                 message_lst = [tweet['extended_tweet']['full_text'],
                        str(tweet['created_at']),
-                       '\n'
-                       ]
+                        '\n']
                 message = '\t'.join(message_lst)
                 print(message)
                 client.put_record(
                     DeliveryStreamName=delivery_stream,
                     Record={
-                    'Data': message
-                    }
+                    'Data': message}
                 )
             elif 'text' in tweet.keys():
                 #print (tweet['text'])
